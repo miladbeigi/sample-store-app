@@ -18,3 +18,9 @@ spec:
           name: sample-store
           ports:
             - containerPort: 80
+          env:
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: sample-store-key
+                  key: SECRET_KEY_BASE
