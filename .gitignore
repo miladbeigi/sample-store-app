@@ -32,3 +32,29 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Terraform
+# Terraform
+.terraform
+*.tfstate
+*.tfstate.backup
+
+# OS X
+.history
+.DS_Store
+
+# IntelliJ
+.idea_modules
+*.iml
+*.iws
+*.ipr
+.idea/
+build/
+*/build/
+out/
+
+# Terragrunt
+.terragrunt-cache
+
+# VSCode
+*.vscode
