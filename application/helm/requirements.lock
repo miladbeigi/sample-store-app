@@ -1,0 +1,6 @@
+dependencies:
+- name: k8s-service
+  repository: https://helmcharts.gruntwork.io
+  version: v0.2.29
+digest: sha256:2ef36b3dc9c5a2ef950fca0e67b2c7bbdb26ecd7b53c0ededf93b601719e725d
+generated: "2025-01-28T10:58:22.093705-05:00"

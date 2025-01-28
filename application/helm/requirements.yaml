@@ -1,0 +1,5 @@
+dependencies:
+  - name: k8s-service
+    repository: "https://helmcharts.gruntwork.io"
+    version: "v0.2.29"
+    alias: web
