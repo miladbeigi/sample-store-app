@@ -1,5 +1,4 @@
-#
-name: Create and publish a Docker image
+name: Build and push Docker image and Helm chart
 
 on:
   push:
@@ -8,9 +7,10 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  VERSION: "v1.0.6"
 
 jobs:
-  build-and-push-image:
+  build-and-push:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -18,6 +18,9 @@ jobs:
       attestations: write
       id-token: write
     steps:
+      - name: install helm
+        uses: Azure/setup-helm@v4.2.0
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -50,3 +53,16 @@ jobs:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
+
+      - name: Package Helm chart
+        run: |
+          helm dependency update ./application/helm
+          yq e -i ".image.repository=\"${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}\"" ./application/helm/values.yaml
+          yq e -i '.image.tag = "main"' ./application/helm/values.yaml
+          helm package ./application/helm --app-version ${{ github.sha }} --version ${{ env.VERSION }}
+
+      - name: Publish Helm chart
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }} --username ${{ github.repository_owner }} --password-stdin
+          export HELM_EXPERIMENTAL_OCI=1
+          helm push sample-store-${{ env.VERSION }}.tgz oci://${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
