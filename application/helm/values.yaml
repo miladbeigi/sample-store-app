@@ -3,9 +3,31 @@ image: &container_image
   repository: nginx
   tag: latest
   pullPolicy: IfNotPresent
-web:
+
+# Apps
+web1:
   containerImage: *container_image
-  applicationName: "sample-store"
+  applicationName: "s1"
+  replicaCount: 3
+  livenessProbe:
+    httpGet:
+      path: /up
+      port: http
+  readinessProbe:
+    httpGet:
+      path: /up
+      port: http
+  service:
+    type: NodePort
+  secrets:
+    sample-store-key:
+      as: environment
+      items:
+        SECRET_KEY_BASE:
+          envVarName: SECRET_KEY_BASE
+web2:
+  containerImage: *container_image
+  applicationName: "s2"
   replicaCount: 3
   livenessProbe:
     httpGet:
