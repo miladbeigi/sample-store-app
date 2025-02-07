@@ -8,7 +8,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  VERSION:
+  VERSION: ${{ github.ref_name }}
   APP_NAME: sample-store-app
 
 jobs:
