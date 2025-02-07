@@ -7,7 +7,8 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  VERSION: "v1.0.8"
+  VERSION: "v1.0.10"
+  APP_NAME: sample-store-app
 
 jobs:
   build-and-push:
@@ -44,7 +45,7 @@ jobs:
           context: application
           file: application/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Generate artifact attestation
@@ -58,7 +59,7 @@ jobs:
         run: |
           helm dependency update ./application/helm
           yq e -i ".image.repository=\"${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}\"" ./application/helm/values.yaml
-          yq e -i '.image.tag = "main"' ./application/helm/values.yaml
+          yq e -i '.image.tag = "${{ github.sha }}"' ./application/helm/values.yaml
           helm package ./application/helm --app-version ${{ github.sha }} --version ${{ env.VERSION }}
 
       - name: Publish Helm chart
@@ -70,5 +71,19 @@ jobs:
       - uses: clowdhaus/argo-cd-action@main
         with:
           version: 2.13.3
-          command: app list
-          options: --server ${{ secrets.ARGOCD_SERVER_NAME}} --auth-token ${{ secrets.ARGOCD_AUTH_TOKEN}} --grpc-web
+          command: app patch ${{ env.APP_NAME }}
+          options: |
+            --patch '{"spec": { "source": { "targetRevision": "${{ env.VERSION}}" } }}' --type merge
+            --server ${{ secrets.ARGOCD_SERVER_NAME }}
+            --auth-token ${{ secrets.ARGOCD_AUTH_TOKEN }}
+            --grpc-web
+
+      - uses: clowdhaus/argo-cd-action@main
+        with:
+          version: 2.13.3
+          command: app sync ${{ env.APP_NAME }} --prune
+          options: |
+            --prune
+            --server ${{ secrets.ARGOCD_SERVER_NAME }}
+            --auth-token ${{ secrets.ARGOCD_AUTH_TOKEN }}
+            --grpc-web
