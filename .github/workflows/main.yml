@@ -2,12 +2,13 @@ name: Build and push Docker image and Helm chart
 
 on:
   push:
-    branches: ["main"]
+    tags:
+      - "v*"
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  VERSION: "v1.0.10"
+  VERSION:
   APP_NAME: sample-store-app
 
 jobs:
