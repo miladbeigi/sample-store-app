@@ -1,3 +1,10 @@
+## v0.2.0 (2025-02-07)
+
+### Fix
+
+- **ci**: add version
+- change version format
+
 ## 0.1.0 (2025-02-07)
 
 ### Feat
