@@ -66,3 +66,9 @@ jobs:
           echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }} --username ${{ github.repository_owner }} --password-stdin
           export HELM_EXPERIMENTAL_OCI=1
           helm push sample-store-${{ env.VERSION }}.tgz oci://${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - uses: clowdhaus/argo-cd-action@main
+        with:
+          version: 2.13.3
+          command: app list
+          options: --server ${{ secrets.ARGOCD_SERVER_NAME}} --auth-token ${{ secrets.ARGOCD_AUTH_TOKEN}} --grpc-web
