@@ -1,0 +1,18 @@
+apiVersion: v1
+data:
+  accounts.milad: login
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"accounts.milad":"login"},"kind":"ConfigMap","metadata":{"annotations":{},"creationTimestamp":"2025-01-15T14:28:23Z","labels":{"app.kubernetes.io/name":"argocd-cm","app.kubernetes.io/part-of":"argocd"},"name":"argocd-cm","namespace":"argocd","resourceVersion":"46572","uid":"84c2c772-be5e-4813-880e-8260d883c927"}}
+  creationTimestamp: "2025-01-15T14:28:23Z"
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-cm
+  namespace: argocd
+  resourceVersion: "828561"
+  uid: 84c2c772-be5e-4813-880e-8260d883c927
+data:
+  accounts.milad: apiKey, login
