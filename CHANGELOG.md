@@ -1,3 +1,9 @@
+## v0.2.1 (2025-02-08)
+
+### Fix
+
+- **argo**: add argocd users RBAC
+
 ## v0.2.0 (2025-02-07)
 
 ### Fix
