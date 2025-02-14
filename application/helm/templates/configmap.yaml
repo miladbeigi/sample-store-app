@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+data:
+  app1: {{ .Values.web1.applicationName }}
+  app2: {{ .Values.web2.applicationName }}
