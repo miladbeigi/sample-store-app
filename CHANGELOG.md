@@ -1,3 +1,15 @@
+## v0.4.0 (2025-02-25)
+
+### Feat
+
+- testing vault agent injector
+
+## v0.3.0 (2025-02-13)
+
+### Feat
+
+- testing templates
+
 ## v0.2.1 (2025-02-08)
 
 ### Fix
