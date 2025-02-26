@@ -1,3 +1,9 @@
+## v0.6.0 (2025-02-26)
+
+### Feat
+
+- change deployment workflows
+
 ## v0.5.0 (2025-02-26)
 
 ### Feat
