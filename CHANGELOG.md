@@ -1,3 +1,9 @@
+## v0.7.0 (2025-02-26)
+
+### Feat
+
+- update second app to have secrets
+
 ## v0.6.0 (2025-02-26)
 
 ### Feat
