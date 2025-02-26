@@ -1,3 +1,9 @@
+## v0.5.0 (2025-02-26)
+
+### Feat
+
+- testing a template secret in vault
+
 ## v0.4.0 (2025-02-25)
 
 ### Feat
